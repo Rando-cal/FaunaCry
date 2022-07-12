@@ -82,6 +82,21 @@ Wireframes:
 ![](./Img/8.png)
 ![](./Img/9.png)
 
+
+Route Table:
+
+
+|   NAME   |     PATH                        | HTTP VERB |            PURPOSE                   |
+|----------|---------------------------------|-----------|--------------------------------------| 
+| Index    | /faunacry                       |    GET    | Main page shows location search      |
+| New      | /faunacry/favorite              |    GET    | Adds new favorite to species         |
+| Create   | /faunacry/favorite/:id          |   POST    | Creates a favorite species           |
+| Show     | /faunacry/:id                   |    GET    | Shows the species per area           |
+| Edit     | /faunacry/favorite/:id/edit     |    GET    | Shows edit form for users favorites  |
+| Update   | /faunacry/favorite/:id/edit     |    PUT    | Updates a favorite                   |
+| Destroy  | /faunacry/favorite/:id/delete   |   DELETE  | Deletes a favorite                   |
+
+
 ERD:
 
 ![](./Img/erd.PNG)
