@@ -24,8 +24,12 @@ Technologies:
 - Mongoose - module
 - dotEnv - module
 - Nodemon - module
+- MethodOverride - module
+- bcyrpt - module
+- express - module
+- liquid-express-views - module
+- express-session - module
 - CSS - Bootstrap framework
-- 
 
 Models:
 - Environmental Conservation Online System (ECOS) U.S. Fish & Wildlife Service API
@@ -64,5 +68,17 @@ As-a-User:
 - Show a list of Favorites
 - Go back to main search by clicking on link in navigation bar
 
+
+WIREFRAMES:
+
+![](./1.png)
+![](./2.png)
+![](./3.png)
+![](./4.png)
+![](./5.png)
+![](./6.png)
+![](./7.png)
+![](./8.png)
+![](./9.png)
 
 
