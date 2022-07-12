@@ -17,6 +17,7 @@ Models:
 - Environmental Conservation Online System (ECOS) U.S. Fish & Wildlife Service API
 - Location information
 - Wikipedia API for information or photos
+- University of Michigan Museum of Zoology - Animal Diversiety Web - https://animaldiversity.org/ (scrape)
 
 
 Color scheme:
