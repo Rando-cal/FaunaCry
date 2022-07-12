@@ -20,12 +20,15 @@ Models:
 
 
 Color scheme:
-<div style="width: 20px; background-color: #f0ead2;"
+f0ead2
 dde5b6
 adc178
 a98467
 6c584c
 000000
 ffffff
+
+![colorscheme](./colors.PNG)
+
 
 
