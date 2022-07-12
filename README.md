@@ -37,6 +37,7 @@ Models:
 - Users
 - Favorite animal save
 - Location information
+    - https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697
 - Wikipedia API for information or photos
 - University of Michigan Museum of Zoology - Animal Diversiety Web - https://animaldiversity.org/ (scrape)
 - Animal habitat classifier: air, earth, or water
@@ -69,7 +70,7 @@ As-a-User:
 - Go back to main search by clicking on link in navigation bar
 
 
-WIREFRAMES:
+Wireframes:
 
 ![](./Img/1.png)
 ![](./Img/2.png)
@@ -81,4 +82,7 @@ WIREFRAMES:
 ![](./Img/8.png)
 ![](./Img/9.png)
 
+ERD:
+
+![](./Img/erd.PNG)
 
