@@ -51,7 +51,7 @@ a98467
 000000
 ffffff
 
-![colorscheme](./colors.PNG)
+![colorscheme](./Img/colors.PNG)
 
 As-a-User:
 - Open the webapge and see a location submit form. You will be presented with few examples of recently extinct species underneath search that randomizes each visit
@@ -71,14 +71,14 @@ As-a-User:
 
 WIREFRAMES:
 
-![](./1.png)
-![](./2.png)
-![](./3.png)
-![](./4.png)
-![](./5.png)
-![](./6.png)
-![](./7.png)
-![](./8.png)
-![](./9.png)
+![](./Img/1.png)
+![](./Img/2.png)
+![](./Img/3.png)
+![](./Img/4.png)
+![](./Img/5.png)
+![](./Img/6.png)
+![](./Img/7.png)
+![](./Img/8.png)
+![](./Img/9.png)
 
 
