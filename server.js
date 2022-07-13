@@ -28,13 +28,19 @@ app.use(
         })
 )
 
-// ROUTES
-app.use('/faunas', faunaRoutes.js)
-// need user-routes and others here
+// ROUTES    *** WATCH FOR ROUTE ORDER ***
+// app.get('/', (req,res) => {
+//     res.redirect('/faunas')
+// })
 
 app.get('/', (req,res) => {
-    res.redirect('/faunas')
+    res.render('./faunas/index.liquid')
 })
+
+// app.use('/', faunaRoutes.js)
+// need user-routes and others here
+
+
 
 
 const PORT = process.env.PORT
