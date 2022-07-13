@@ -1,9 +1,11 @@
 require('dotenv').config()
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const express = require('express')
 const morgan = require('morgan')
 const methodOverride = require('method-override')
 const faunaRoutes = require('./controller/fauna_routes.js')
+
 
 // express app object
 const app = require('liquid-express-views')(express())
@@ -29,15 +31,18 @@ app.use(
 )
 
 // ROUTES    *** WATCH FOR ROUTE ORDER ***
-// app.get('/', (req,res) => {
+// app.get('/', (req,res) => {  /// DO i need this??
 //     res.redirect('/faunas')
 // })
 
-app.get('/', (req,res) => {
-    res.render('./faunas/index.liquid')
-})
+// basic route for sanity check
+// app.get('/', (req,res) => {
+//     res.render('./faunas/index.liquid')
+// })
 
-// app.use('/', faunaRoutes.js)
+// this worked with / vs /faunas. I think fauna_routes.js 
+    //fills in the fauna in /fauna part
+app.use('/', faunaRoutes)  
 // need user-routes and others here
 
 
