@@ -26,9 +26,9 @@ Technologies:
 - Nodemon - module
 - MethodOverride - module
 - bcyrpt - module
-- express - module
-- liquid-express-views - module
-- express-session - module
+- Express - module
+- Liquid-express-views - module
+- Express-session - module
 - CSS - Bootstrap framework
 
 Models:
