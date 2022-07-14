@@ -17,14 +17,19 @@ router.get('/faunas/show', (req,res) => {
 })
 
 
-router.get('/faunas/:locationInfo', (req,res) => {
-    console.log('IN GET');
-    console.log("!!!"+ process.env.apiUrlFront+req.params+process.env.apiUrlBack)
-    fetch(process.env.apiUrlFront+"Idaho"+process.env.apiUrlBack)
-        .then(console.log("in fetch"))
-        .then(res =>{console.log(res)})
+router.put('/faunas/X', (req,res) => {
+    // console.log('req.body.X=================',req.body.X);
+    const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
+    console.log(fetchQuery);
+
+    fetch(fetchQuery)
+        .then(res =>{res.json})
+        .then(res => {console.log(res)})
         .catch(err => {console.log(err)})
-        res.render('faunas/show.liquid')
+        
+        console.log('END of FETCH============================');
+        res.render('./faunas/show.liquid')
+
 })
 
 
