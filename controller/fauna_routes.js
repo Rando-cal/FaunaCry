@@ -9,7 +9,43 @@ const { append } = require('express/lib/response');
 
 const router = express.Router()
 
-const Fauna = require('../models/faunas.js')
+
+const mongoose = require('../models/connections.js')
+
+const { Schema, model } = mongoose
+
+const faunaSchema = new Schema (
+
+    {
+
+        commonName: String,
+        sciName: String,
+        speciesStatus: String,
+        speciesImage: String,
+        speciesState: String,
+        speciesFips: Number,
+        speciesCounty: String,
+        speciesCountry: String
+
+
+        // needs to ref favorites here and other relationships
+
+    },
+
+    {
+
+        timestamps:true
+    }
+
+)
+
+// collection will be called faunas
+// this is compiling the model
+const Fauna = model('Fauna', faunaSchema)
+
+
+
+// const Fauna = require('../models/faunas.js')
 
 const downloadToFile = (content, filename, contentType) => {
     const a = document.createElement('a');
@@ -21,6 +57,8 @@ const downloadToFile = (content, filename, contentType) => {
 
     URL.revokeObjectURL(a.href)
 }
+
+console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', Fauna);
 
 //   let text = 'the data to read out'
 //   downloadToFile(text, 'my-new-file.txt', 'text/plain');
@@ -83,12 +121,12 @@ router.put('/faunas/X', (req,res) => {
         .then(res =>res.json())
 
         // .then((jsonData) => res.render('./faunas/show.liquid', { jsonData : jsonData } ) ) //// get out obj to pass to res.render
-        .then( ( response ) => { console.log(response.data) 
+        .then( ( response ) => { 
 
-            // Fauna.create( { commonName: response.data[0][0] }, function (err,small) {
-            //     if (err) return handleError(err)
-            //     return
-            // })
+            Fauna.create( { commonName: response.data[0][0] }, function (err,small) {
+                if (err) return handleError(err)
+                return
+            })
 
         })
         
