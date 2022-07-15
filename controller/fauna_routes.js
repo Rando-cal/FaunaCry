@@ -5,8 +5,11 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const { response } = require('express');
 const express = require('express');
 const req = require('express/lib/request');
+const { append } = require('express/lib/response');
 
 const router = express.Router()
+
+const Fauna = require('../models/faunas.js')
 
 const downloadToFile = (content, filename, contentType) => {
     const a = document.createElement('a');
@@ -27,28 +30,42 @@ const downloadToFile = (content, filename, contentType) => {
 
 /// ==================  Processing Functions ==============================
 
-const parseIt = (jsonData) => {
-    const test = jsonData.data[0][12].url
+// testing
+// const parseIt = (jsonData) => {
+//     const test = jsonData.data[0][12].url
 
-// jsonData.data[0]                         first animal item
-// jsonData.data[1]                         second animal item
-// jsonData.data[0][0]                      common name
-// jsonData.data[0][1].value                scientific name
-// jsonData.data[0][2]			            status
-// jsonData.data[0][12].url		            image URL
+// // jsonData.data[0]                         first animal item
+// // jsonData.data[1]                         second animal item
+// // jsonData.data[0][0]                      common name
+// // jsonData.data[0][1].value                scientific name
+// // jsonData.data[0][2]			            status
+// // jsonData.data[0][12].url		            image URL
 
+//     console.log(test);
 
+//     return jsondata
+// }
 
-    console.log(test);
+// const somefunction= (response) => {
+//     response.field.url
+// }
 
-    return jsondata
-}
+// const addEntriesDB = (jsonData,Fauna) => {
+//     Fauna.create( { commonName: jsonData }, function (err,small) {
+//         if (err) return handleError(err)
+//     })
+//     // console.log(Object.keys(jsonData).length)  // gets object length
 
+//     return 
 
-
+// }
 
 
 ///=============================  ROUTES ========================================================
+
+router.get('/faunas', (req,res) => {
+    res.render('./faunas/index.liquid')
+})
 
 
 router.get('/faunas/show', (req,res) => {
@@ -61,25 +78,46 @@ router.put('/faunas/X', (req,res) => {
 
     // refine query to exclude plants
     const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
-    console.log(fetchQuery);
 
     fetch(fetchQuery)
         .then(res =>res.json())
-        // .then(parseIt)
-        .then((jsonData) => res.render('./faunas/show.liquid', { jsonData : jsonData } ) ) // get out obj to pass to res.render
 
+        // .then((jsonData) => res.render('./faunas/show.liquid', { jsonData : jsonData } ) ) //// get out obj to pass to res.render
+        .then( ( response ) => { console.log(response.data) 
+
+            // Fauna.create( { commonName: response.data[0][0] }, function (err,small) {
+            //     if (err) return handleError(err)
+            //     return
+            // })
+
+        })
+        
         .catch(err => console.log(err))
         
         // console.log('END of FETCH============================');
          // how do you pass in object from Fetch?
 
+        
+
+res.render('faunas/show.liquid')
+
 })
+         ///===================== Other option ==================
+        //  let charles = new Person({
+        //     fullName: 'Charles Brown',
+        //     photosURLs: ['https://bit.ly/34Kvbsh'],
+        //     yearBorn: 1922,
+        //     notes: 'Famous blues singer and pianist. Parents not real.',
+        //     mother: alice._id,
+        //     father: bob._id,
+        //   });
+
+        //   await charles.save();
+
+        
 
 
 
-router.get('/faunas', (req,res) => {
-    res.render('./faunas/index.liquid')
-})
 
 
 
