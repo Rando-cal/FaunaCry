@@ -15,7 +15,11 @@ const faunaSchema = new Schema (
         speciesState: String,
         speciesFips: Number,
         speciesCounty: String,
-        speciesCountry: String
+        speciesCountry: String,
+        areaStateShort: String,
+        areaStateFull: String,
+        speciesId: Number
+
 
 
         // needs to ref favorites here and other relationships
@@ -33,4 +37,4 @@ const faunaSchema = new Schema (
 // this is compiling the model
 const Fauna = model('Fauna', faunaSchema)
 
-module.export = Fauna
+module.exports = Fauna

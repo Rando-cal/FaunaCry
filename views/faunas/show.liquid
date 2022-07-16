@@ -17,11 +17,14 @@ SHOW.liquid
 
 
 <div class="card" style="width: 18rem;">
-    <img src="{{jsonData.data[0][12].url}}" class="card-img-top" alt="...">
+
+    <img src="{{response[0].speciesImage}}" class="card-img-top" alt="...">
     <div class="card-body">
-        <h5 class="card-title">{{jsonData.data[0][0]}}</h5>
-        <p class="card-text">{{jsonData.data[0][1].value}}</p>
-        <p class="card-text">{{jsonData.data[0][2]}}</p>
+        <h5 class="card-title">{{response[0].commonName}}</h5>
+        <p class="card-text">{{response[0].sciName}}</p>
+        <p class="card-text">{{response[0].speciesStatus}}</p>
+        <p class="card-text">{{response[0].speciesState}}</p>
+        <p class="card-text">{{response[0].areaStateFull}}</p>
 
         <a href="#" class="btn btn-primary">Favorite</a>
     </div>

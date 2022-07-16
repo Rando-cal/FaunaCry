@@ -9,43 +9,12 @@ const { append } = require('express/lib/response');
 
 const router = express.Router()
 
-
 const mongoose = require('../models/connections.js')
 
-const { Schema, model } = mongoose
+const Fauna = require('../models/faunas.js')
 
-const faunaSchema = new Schema (
+let userInput
 
-    {
-
-        commonName: String,
-        sciName: String,
-        speciesStatus: String,
-        speciesImage: String,
-        speciesState: String,
-        speciesFips: Number,
-        speciesCounty: String,
-        speciesCountry: String
-
-
-        // needs to ref favorites here and other relationships
-
-    },
-
-    {
-
-        timestamps:true
-    }
-
-)
-
-// collection will be called faunas
-// this is compiling the model
-const Fauna = model('Fauna', faunaSchema)
-
-
-
-// const Fauna = require('../models/faunas.js')
 
 const downloadToFile = (content, filename, contentType) => {
     const a = document.createElement('a');
@@ -57,8 +26,6 @@ const downloadToFile = (content, filename, contentType) => {
 
     URL.revokeObjectURL(a.href)
 }
-
-console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', Fauna);
 
 //   let text = 'the data to read out'
 //   downloadToFile(text, 'my-new-file.txt', 'text/plain');
@@ -106,56 +73,63 @@ router.get('/faunas', (req,res) => {
 })
 
 
-router.get('/faunas/show', (req,res) => {
-        res.render('./faunas/show.liquid', {res})
-})
 
 
-router.put('/faunas/X', (req,res) => {
-    // console.log('req.body.X=================',req.body.X);
 
-    // refine query to exclude plants
+
+router.put('/faunas/:X', (req,res) => {
+    userInput = req.body.X
+    console.log(req.body);
+
+    // refine API query to exclude plants
+    
     const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
 
     fetch(fetchQuery)
         .then(res =>res.json())
 
-        // .then((jsonData) => res.render('./faunas/show.liquid', { jsonData : jsonData } ) ) //// get out obj to pass to res.render
-        .then( ( response ) => { 
-
-            Fauna.create( { commonName: response.data[0][0] }, function (err,small) {
+        .then( ( res ) => { 
+        
+        // adding Fetchdata into DB
+        Fauna.create( { 
+        
+            commonName: res.data[0][0],
+            sciName: res.data[0][1].value,
+            speciesStatus: res.data[0][2],
+            speciesImage: res.data[0][12].url,
+            speciesFips: res.data[0][3],
+            speciesCounty: res.data[0][4],
+            speciesCountry: res.data[0][8],
+            areaStateShort: res.data[0][5],
+            areaStateFull: res.data[0][6],
+            speciesId: res.data[0][9] 
+            
+            }, function (err,small) {
                 if (err) return handleError(err)
                 return
             })
 
         })
-        
+
         .catch(err => console.log(err))
-        
-        // console.log('END of FETCH============================');
-         // how do you pass in object from Fetch?
 
-        
-
-res.render('faunas/show.liquid')
+// may need to pass in here since the last .then could duplicate
+console.log('LEAVING 112========================');
+res.redirect('/faunas/show/:X')
 
 })
-         ///===================== Other option ==================
-        //  let charles = new Person({
-        //     fullName: 'Charles Brown',
-        //     photosURLs: ['https://bit.ly/34Kvbsh'],
-        //     yearBorn: 1922,
-        //     notes: 'Famous blues singer and pianist. Parents not real.',
-        //     mother: alice._id,
-        //     father: bob._id,
-        //   });
 
-        //   await charles.save();
+// WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
+router.get('/faunas/show/:X', (req,res) => {
+    // query var is userInput
 
-        
+    Fauna.find({userInput})
+    .then(response => { 
+        res.render('./faunas/show.liquid', { response : response })
+    })
+    .catch(err =>  { res.json(err)})
 
-
-
+})
 
 
 

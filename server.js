@@ -45,10 +45,12 @@ app.use(
 app.use('/', faunaRoutes)  
 // need user-routes and others here
 
-app.use('/', (req,res) => {
-    res.redirect('/faunas')
 
-}) 
+// this breaks the empty / but when removed, does not block fauanas/show
+// app.use('/', (req,res) => {
+//     res.redirect('/faunas')
+
+// }) 
 
 
 
