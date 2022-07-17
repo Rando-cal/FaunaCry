@@ -4,7 +4,9 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const express = require('express')
 const morgan = require('morgan')
 const methodOverride = require('method-override')
+
 const faunaRoutes = require('./controller/fauna_routes.js')
+const userRoutes = require('./controller/user_routes')
 
 
 // express app object
@@ -42,7 +44,8 @@ app.use(
 
 // this worked with / vs /faunas. I think fauna_routes.js 
     //fills in the fauna in /fauna part
-app.use('/', faunaRoutes)  
+app.use('/', faunaRoutes)
+app.use('/users', userRoutes)
 // need user-routes and others here
 
 
