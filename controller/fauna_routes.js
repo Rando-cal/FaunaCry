@@ -79,7 +79,8 @@ router.get('/faunas', (req,res) => {
 
 router.put('/faunas/:X', (req,res) => {
     userInput = req.body.X
-    console.log(req.body);
+    let varToPass = req.body.X
+    console.log('REQ_BODY::::$$$::::',req.body);
 
     // refine API query to exclude plants
     
@@ -114,16 +115,20 @@ router.put('/faunas/:X', (req,res) => {
         .catch(err => console.log(err))
 
 // may need to pass in here since the last .then could duplicate
-console.log('LEAVING 112========================');
-res.redirect('/faunas/show/:X')
+console.log('LEAVING 118========================');
+// res.redirect('/faunas/show/:X')
+res.redirect(`/faunas/show/${varToPass}`)
 
 })
 
 // WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
 router.get('/faunas/show/:X', (req,res) => {
-    // query var is userInput
+    console.log('req*******',req.params.X);
+    let stateInput = req.params.X
 
-    Fauna.find({userInput})
+    console.log('getbefore db find:',stateInput);
+
+    Fauna.find({stateInput})
     .then(response => { 
         res.render('./faunas/show.liquid', { response : response })
     })
