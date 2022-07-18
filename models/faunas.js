@@ -42,5 +42,6 @@ const faunaSchema = new Schema (
 // collection will be called faunas
 // this is compiling the model
 const Fauna = model('Fauna', faunaSchema)
+// const Fauna = model('Fauna', faunaSchema, 'Fauna') // can add extra fauna to not pluralize
 
 module.exports = Fauna

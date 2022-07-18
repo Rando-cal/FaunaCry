@@ -11,6 +11,9 @@ const router = express.Router()
 
 const mongoose = require('../models/connections.js')
 
+// used FOR DEBUGGIN
+mongoose.set('debug',true)
+
 const Fauna = require('../models/faunas.js')
 
 let userInput
@@ -72,6 +75,8 @@ router.get('/faunas', (req,res) => {
     res.render('./faunas/index.liquid')
 })
 
+// Gets user state input and creates documents based on that
+    // pass the search term to the 'show' page for db pull
 router.put('/faunas/:X', (req,res) => {
     userInput = req.body.X
     let varToPass = req.body.X
@@ -120,19 +125,21 @@ res.redirect(`/faunas/show/${varToPass}`)
 
 // WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
 router.get('/faunas/show/:X', (req,res) => {
-    console.log('req*******',req.params.X);
+
     let stateInput = req.params.X
 
-    console.log('getbefore db find:',stateInput);
+    console.log('getbefore db find:stateInput:',stateInput)
+    console.log('the full string', "{'areaStateull':'"+stateInput+"'}");
 
-    Fauna.find(stateInput)
-    // .then(response => { 
-    //     console.log('RESPONSE:::*&**');
-    // })
+    // believe its getting STOPPED here
+    // Fauna.find or faunas.find
+    // Fauna.find("{areaStateFull:"+stateInput+"}")
+    Fauna.find({areaStateFull: "Idaho"})
+
+
     .then(response => { 
         res.render('./faunas/show.liquid', { response : response })
     })
-
 
     .catch(err =>  { res.json(err)})
 
