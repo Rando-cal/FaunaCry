@@ -72,15 +72,10 @@ router.get('/faunas', (req,res) => {
     res.render('./faunas/index.liquid')
 })
 
-
-
-
-
-
 router.put('/faunas/:X', (req,res) => {
     userInput = req.body.X
     let varToPass = req.body.X
-    console.log('REQ_BODY::::$$$::::',req.body);
+    console.log('varToPass:::$$$::::',varToPass)
 
     // refine API query to exclude plants
     
@@ -103,14 +98,16 @@ router.put('/faunas/:X', (req,res) => {
             speciesCountry: res.data[0][8],
             areaStateShort: res.data[0][5],
             areaStateFull: res.data[0][6],
-            speciesId: res.data[0][9] 
+            speciesId: res.data[0][9]
             
-            }, function (err,small) {
-                if (err) return handleError(err)
-                return
-            })
+            // }
+            // , function (err,small) {
+            //     if (err) return handleError(err)
+            //     return
+            // })
 
         })
+        })       
 
         .catch(err => console.log(err))
 
@@ -128,10 +125,15 @@ router.get('/faunas/show/:X', (req,res) => {
 
     console.log('getbefore db find:',stateInput);
 
-    Fauna.find({stateInput})
+    Fauna.find(stateInput)
+    // .then(response => { 
+    //     console.log('RESPONSE:::*&**');
+    // })
     .then(response => { 
         res.render('./faunas/show.liquid', { response : response })
     })
+
+
     .catch(err =>  { res.json(err)})
 
 })

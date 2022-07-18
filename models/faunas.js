@@ -4,6 +4,8 @@ const mongoose = require('./connections.js')
 
 const { Schema, model } = mongoose
 
+const User = require('./user.js')
+
 const faunaSchema = new Schema (
 
     {
@@ -12,13 +14,17 @@ const faunaSchema = new Schema (
         sciName: String,
         speciesStatus: String,
         speciesImage: String,
-        speciesState: String,
+        speciesState: String, 
         speciesFips: Number,
         speciesCounty: String,
         speciesCountry: String,
         areaStateShort: String,
         areaStateFull: String,
-        speciesId: Number
+        speciesId: Number,
+        owner: {
+            type: Schema.Types.ObjectId, // a singlue user _id
+            ref: 'User' // string of user is how we ref the model
+        }
 
 
 

@@ -4,12 +4,22 @@ const express = require('express')
 const methodOverride = require('method-override')
 // const connect = require('connect-mongo')
 
-
-
 // Make router
 const router = express.Router()
 
-router.get('/signup', async (req,res) => {
+
+//==========================================================================
+
+router.get('/', (req,res) => {
+    res.redirect('/users/login')
+})
+
+router.get('/signup',  (req,res) => {
+    res.render('../views/users/signup.liquid')
+})
+
+
+router.post('/signup', async (req,res) => {
     req.body.password = await bcrypt.hash(
         req.body.password,
         await bcrypt.genSalt(10)
@@ -17,7 +27,7 @@ router.get('/signup', async (req,res) => {
 
     User.create(req.body)
         .then(user => {
-            res.redirect('/user/login')
+            res.redirect('/users/login')
         })
 
         .catch(error => {res.json(error)})
@@ -32,6 +42,8 @@ router.get('/login', (req,res) => {
 // CAREFULL OF .then AND ASYNC. This differs from fruits now
 router.post('/login', async (req,res) => {
     const { username, password } = req.body
+    console.log('username::==>>>',username)
+    console.log('password::=======>>>',password);
 
     User.findOne({ username })
         .then( (user) => {
@@ -60,6 +72,10 @@ router.post('/login', async (req,res) => {
 
 
 router.get('/logout', (req,res) => {
+    res.render('../views/users/logout.liquid')
+})
+
+router.post('/logout', (req,res) => {
     req.session.destroy(ret => {
         console.log('This is returned from req.session.destroy', ret)
         console.log(req.session)
