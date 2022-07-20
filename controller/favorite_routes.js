@@ -16,27 +16,10 @@ const Favorite = require('../models/favorites.js')
 // This is when the user hits the favorite button. Doesn't redirect anywhere but 
 // /favorites/:Y
 router.post('/:Y', async (req,res) => {
-console.log(req.body);
-//     async function getUser() {
-        
-//         try {
-//                 Fauna.
 
-//             if (!response.ok) {
-//                 throw new Error(`Error! status: ${response.status}`)
-//             }
+    let varToPass ="test vartopass"
+    console.log('req',req);
 
-//             const result = await response.json()
-//             return result
-            
-//         } catch (err) {
-//                 console.log(err)
-//         }
-        
-//     }
-
-// await getUser()
-//     let varToPass= 'temp'
 
     res.redirect(`/favorites/show/${varToPass}`)
 })
