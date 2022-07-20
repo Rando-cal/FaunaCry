@@ -2,6 +2,8 @@ require('dotenv').config()
 
 const mongoose = require('mongoose')
 
+
+
 const DATABASE_URI = process.env.DATABASE_URI
 
 const config = {
@@ -17,4 +19,4 @@ mongoose.connection
     .on('close', () => console.log('Disconnected from Mongoose'))
     .on('error', errr => console.error(err))
 
-    module.exports = mongoose
+module.exports = mongoose

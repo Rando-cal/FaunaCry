@@ -1,12 +1,14 @@
 require('dotenv').config()
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const express = require('express')
 const morgan = require('morgan')
 const methodOverride = require('method-override')
+const express = require('express')
+
 
 const faunaRoutes = require('./controller/fauna_routes.js')
 const userRoutes = require('./controller/user_routes')
+const favoriteRoutes = require('./controller/favorite_routes.js')
 
 
 // express app object
@@ -46,6 +48,8 @@ app.use(
     //fills in the fauna in /fauna part
 app.use('/', faunaRoutes)
 app.use('/users', userRoutes)
+app.use('/favorites', favoriteRoutes)
+
 // need user-routes and others here
 
 

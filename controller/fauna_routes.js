@@ -1,3 +1,11 @@
+// NEED: 
+// to add multiple entries from api fetch into DB
+// a way to remove duplicates in my db query
+// a way to add favorites to My Faunas
+// a way to trigger a route without redirecting
+// error pages for logins, logout, sigunps...
+
+
 require('dotenv').config()
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -89,59 +97,113 @@ router.put('/faunas/:X', (req,res) => {
     fetch(fetchQuery)
         .then(res =>res.json())
 
+        // .then( (res) => {return console.log( res) } )
+
+        // CAN"T READ res.DATA
         .then( ( res ) => { 
         
-        // adding Fetchdata into DB
-        Fauna.create( { 
-        
-            commonName: res.data[0][0],
-            sciName: res.data[0][1].value,
-            speciesStatus: res.data[0][2],
-            speciesImage: res.data[0][12].url,
-            speciesFips: res.data[0][3],
-            speciesCounty: res.data[0][4],
-            speciesCountry: res.data[0][8],
-            areaStateShort: res.data[0][5],
-            areaStateFull: res.data[0][6],
-            speciesId: res.data[0][9]
-            
-            // }
-            // , function (err,small) {
-            //     if (err) return handleError(err)
-            //     return
-            // })
+            // adding Fetchdata into DB
 
+            // get array of promises written to the DB. use .MAP
+            // of res.data
+            // array of promices comes from Fauna.create not before
+
+            //try Fauna.insertMany
+            return Fauna.insertMany({ 
+            
+                commonName: res.data[0][0],
+                sciName: res.data[0][1].value,
+                speciesStatus: res.data[0][2],
+                speciesImage: res.data[0][12].url,
+                speciesFips: res.data[0][3],
+                speciesCounty: res.data[0][4],
+                speciesCountry: res.data[0][8],
+                areaStateShort: res.data[0][5],
+                areaStateFull: res.data[0][6],
+                speciesId: res.data[0][9]
+                
+                // }
+                // , function (err,small) {
+                //     if (err) return handleError(err)
+                //     return
+                // })
+
+            })
         })
-        })       
+        
+        .then( (response) => {res.redirect(`/faunas/show/${varToPass}`)})
 
         .catch(err => console.log(err))
-
-// may need to pass in here since the last .then could duplicate
-console.log('LEAVING 118========================');
-// res.redirect('/faunas/show/:X')
-res.redirect(`/faunas/show/${varToPass}`)
-
 })
+
+
+// RANDOM TESTING function to get Find.query to work
+// async function queryIt(stateInput){
+//     require('dotenv').config()
+//     const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+//     const { response } = require('express');
+//     const express = require('express');
+//     const req = require('express/lib/request');
+//     const { append } = require('express/lib/response');
+//     const router = express.Router()
+//     const mongoose = require('../models/connections.js')
+//     // used FOR DEBUGGIN
+//     mongoose.set('debug',true)
+//     const Fauna = require('../models/faunas.js')
+//     let userInput
+
+
+//     await Fauna.find("{areaStateFull:"+stateInput+"}")
+
+//     .then(response => {
+//         console.log('REPONSE@@',response)
+
+//     })
+//     .catch(err =>  { response.json(err)})
+//     return response
+// }
+
+
+// ASYNC AWAIT SYNTAX
+// outer.get('/faunas/show/:X', async(req,res) => 
+// with  await console.log('the full string', "{'areaStateull':'"+stateInput+"'}");
+
+
 
 // WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
 router.get('/faunas/show/:X', (req,res) => {
 
     let stateInput = req.params.X
+    console.log('#############',req.session.userId);
 
     console.log('getbefore db find:stateInput:',stateInput)
     console.log('the full string', "{'areaStateull':'"+stateInput+"'}");
-
+    
     // believe its getting STOPPED here
     // Fauna.find or faunas.find
-    // Fauna.find("{areaStateFull:"+stateInput+"}")
-    Fauna.find({areaStateFull: "Idaho"})
+    // maybe async issue
 
+    // queryIt(stateInput)   /////  testing
+
+
+    // DB QUERY - distinct is close but doesn't give the whole doc:
+    // db.faunas.distinct('commonName',{'areaStateFull':'Oregon'})   gives all distinct cmn in Oregon
+
+    // older V here
+    Fauna.find({areaStateFull: stateInput})  //valid query that works
+    // .then(response => {console.log(response)})
+
+
+    // .then( response => {console.log(response)})
 
     .then(response => { 
-        res.render('./faunas/show.liquid', { response : response })
-    })
+        res.render('./faunas/show.liquid', { response : response } )
 
+        // res.render('./faunas/show.liquid', { response : response } , variable 2)  this is for passing in 2nd var
+
+    }) 
     .catch(err =>  { res.json(err)})
+    console.log('bottom of getROUTE');
 
 })
 

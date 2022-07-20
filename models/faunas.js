@@ -33,7 +33,6 @@ const faunaSchema = new Schema (
     },
 
     {
-
         timestamps:true
     }
 

@@ -83,4 +83,8 @@ router.post('/logout', (req,res) => {
     })
 })
 
+
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PUT IN ALL ROUTES
 module.exports = router
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

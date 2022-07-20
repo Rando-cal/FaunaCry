@@ -1,0 +1,18 @@
+show.liquid
+
+button like action
+
+        {% comment %}
+
+        freer way of liking animals
+
+        <button id="btnsave" onclick="fncsave()">Like</button>
+
+        <script type="text/javascript">
+            function fncsave()
+            {
+                document.getElementById('{%= savebtn.ClientID %}').click()
+                console.log('BUTTON CLICKED');
+            }
+        </script>
+        {% endcomment %}
