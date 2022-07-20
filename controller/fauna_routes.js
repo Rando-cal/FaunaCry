@@ -20,7 +20,7 @@ const router = express.Router()
 const mongoose = require('../models/connections.js')
 
 // used FOR DEBUGGIN
-mongoose.set('debug',true)
+// mongoose.set('debug',true)
 
 const Fauna = require('../models/faunas.js')
 
@@ -78,29 +78,92 @@ const downloadToFile = (content, filename, contentType) => {
 
 
 ///=============================  ROUTES ========================================================
+//================================================================================================
 
 router.get('/faunas', (req,res) => {
     res.render('./faunas/index.liquid')
 })
 
-// Gets user state input and creates documents based on that
-    // pass the search term to the 'show' page for db pull
-router.put('/faunas/:X', (req,res) => {
-    userInput = req.body.X
-    let varToPass = req.body.X
-    console.log('varToPass:::$$$::::',varToPass)
+// V3 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+// router.put('/faunas/:X', async (req,res) => {
 
-    // refine API query to exclude plants
+//     let varToPass = req.body.X
+
+//     const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
+
+//     async function doFetch() {
+//         try {
+//             const response = await fetch(fetchQuery);
     
-    const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
+//             if (!response.ok) {
+//             throw new Error(`Error! status: ${response.status}`);
+//             }
+    
+//             const result = await response.json()
 
-    fetch(fetchQuery)
-        .then(res =>res.json())
+//             return result;
 
-        // .then( (res) => {return console.log( res) } )
 
-        // CAN"T READ res.DATA
-        .then( ( res ) => { 
+//         } catch (err) {
+//             console.log(err);
+//         }
+//     }
+
+//     console.log('===========OUTSIDE doFetch===================================================');
+    
+//     const fetchData = await doFetch()
+
+//     console.log('fetchData.data[0]',fetchData.data[0][0])
+//     console.log('fetchData.data[0][1].value',fetchData.data[0][1].value)
+//     console.log('fetchData.data[0][2]',fetchData.data[0][2])
+//     console.log('fetchData.data.length',fetchData.data.length)
+
+
+//     async function doCreate(fetchData) {
+
+//         try {
+
+//             // for (let i = 0; i < fetchData.data.length; i++){
+//             Fauna.create({ 
+            
+//                 commonName: fetchData.data[0][0],
+//                 sciName: fetchData.data[0][1].value,
+//                 speciesStatus: fetchData.data[0][2],
+//                 speciesImage: fetchData.data[0][12].url,
+//                 speciesFips: fetchData.data[0][3],
+//                 speciesCounty: fetchData.data[0][4],
+//                 speciesCountry: fetchData.data[0][8],
+//                 areaStateShort: fetchData.data[0][5],
+//                 areaStateFull: fetchData.data[0][6],
+//                 speciesId: fetchData.data[0][9]
+
+//             })
+//             // } // for loop
+    
+//             if (!response.ok) {
+//             throw new Error(`Error! status: ${response.status}`);
+//             }
+    
+//             // const res = await response.json()          
+
+//             return 
+
+
+//         } catch (err) {
+//             console.log(err);
+//         }
+//     }
+
+//     await doCreate(fetchData)
+
+// res.redirect(`/faunas/show/${varToPass}`)  
+
+// }) // router.put
+
+
+
+// V3 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
         
             // adding Fetchdata into DB
 
@@ -108,19 +171,24 @@ router.put('/faunas/:X', (req,res) => {
             // of res.data
             // array of promices comes from Fauna.create not before
 
-            //try Fauna.insertMany
-            return Fauna.insertMany({ 
+            // try Fauna.insertMany
+
+
+            // THIS WAS WORKING *****
+            // return Fauna.create({ 
             
-                commonName: res.data[0][0],
-                sciName: res.data[0][1].value,
-                speciesStatus: res.data[0][2],
-                speciesImage: res.data[0][12].url,
-                speciesFips: res.data[0][3],
-                speciesCounty: res.data[0][4],
-                speciesCountry: res.data[0][8],
-                areaStateShort: res.data[0][5],
-                areaStateFull: res.data[0][6],
-                speciesId: res.data[0][9]
+            //     commonName: res.data[0][0],
+            //     sciName: res.data[0][1].value,
+            //     speciesStatus: res.data[0][2],
+            //     speciesImage: res.data[0][12].url,
+            //     speciesFips: res.data[0][3],
+            //     speciesCounty: res.data[0][4],
+            //     speciesCountry: res.data[0][8],
+            //     areaStateShort: res.data[0][5],
+            //     areaStateFull: res.data[0][6],
+            //     speciesId: res.data[0][9]
+
+            //************** */
                 
                 // }
                 // , function (err,small) {
@@ -128,13 +196,16 @@ router.put('/faunas/:X', (req,res) => {
                 //     return
                 // })
 
-            })
-        })
+        //     })
+        // })
         
-        .then( (response) => {res.redirect(`/faunas/show/${varToPass}`)})
 
-        .catch(err => console.log(err))
-})
+        // working code ^^^^^^^^^^^^^^
+        // .then( (response) => {res.redirect(`/faunas/show/${varToPass}`)})
+        // .catch(err => console.log(err))    })
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
 
 // RANDOM TESTING function to get Find.query to work
@@ -168,45 +239,168 @@ router.put('/faunas/:X', (req,res) => {
 // outer.get('/faunas/show/:X', async(req,res) => 
 // with  await console.log('the full string', "{'areaStateull':'"+stateInput+"'}");
 
+// NEW PUT for faunas/show
+// router.put('/faunas/show/:X', async (req,res) => {
 
+//     const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
+//     console.log('fetchQuery')
 
-// WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
-router.get('/faunas/show/:X', (req,res) => {
-
-    let stateInput = req.params.X
-    console.log('#############',req.session.userId);
-
-    console.log('getbefore db find:stateInput:',stateInput)
-    console.log('the full string', "{'areaStateull':'"+stateInput+"'}");
+//     async function getAnimalFetch(fetchQuery) {
+//         try {
+//             const response = await fetch(fetchQuery)
     
-    // believe its getting STOPPED here
-    // Fauna.find or faunas.find
-    // maybe async issue
+//             if (!response.ok){
+//                 throw new Error(`Error! status: ${response.status}`)
+//             }
+    
+//             const result = await response.json()
+//             return result
+    
+//         } catch (err) {
+//             console.log(err);
+//         }
+//     }
+    
+//     const zipFetch = await getAnimalFetch(fetchQuery)
+//     res.render('./faunas/show.liquid', { zipFetch } )
 
-    // queryIt(stateInput)   /////  testing
 
 
-    // DB QUERY - distinct is close but doesn't give the whole doc:
-    // db.faunas.distinct('commonName',{'areaStateFull':'Oregon'})   gives all distinct cmn in Oregon
+    // fetch(fetchQuery)
+    
+    // .then(response => { 
+    //     res.render('./faunas/show.liquid', { response : response } )
 
-    // older V here
-    Fauna.find({areaStateFull: stateInput})  //valid query that works
-    // .then(response => {console.log(response)})
+    //     // res.render('./faunas/show.liquid', { response : response } , variable 2)  this is for passing in 2nd var
+
+    // }) 
+    // .catch(err =>  { res.json(err)})
+    // console.log('bottom of getROUTE');
+
+// })
 
 
-    // .then( response => {console.log(response)})
 
-    .then(response => { 
-        res.render('./faunas/show.liquid', { response : response } )
 
-        // res.render('./faunas/show.liquid', { response : response } , variable 2)  this is for passing in 2nd var
 
-    }) 
-    .catch(err =>  { res.json(err)})
-    console.log('bottom of getROUTE');
+
+
+
+
+// v3
+// WILL HAVE TO TEST AFTER ADDING USERS AND LOGINS...
+// router.get('/faunas/show/:X', async (req,res) => {
+
+//     let stateInput = req.params.X
+
+//     // DB QUERY - distinct is close but doesn't give the whole doc:
+//     // db.faunas.distinct('commonName',{'areaStateFull':'Oregon'})   gives all distinct cmn in Oregon
+
+//     // older V here
+
+//     async function dbPullforShow(stateInput) {
+//         try {
+//             const response2 = await Fauna.find({areaStateFull: stateInput})
+    
+//             if (!response2.ok){
+//                 throw new Error(`Error! status: ${response2.status}`)
+//             }
+    
+//             const result = await response2.json()
+//             return result
+    
+//         } catch (err) {
+//             console.log(err);
+//         }
+//     }
+    
+//     const dbFetchforShow = await dbPullforShow(stateInput)
+
+//     res.render('./faunas/show.liquid', { dbFetchforShow : dbFetchforShow } )
+    
+// })
+
+
+
+
+
+//     Fauna.find({areaStateFull: stateInput})  //valid query that works
+
+//     .then(response => { return
+//         res.render('./faunas/show.liquid', { response : response } )
+
+//         // res.render('./faunas/show.liquid', { response : response } , variable 2)  this is for passing in 2nd var
+
+//     }) 
+//     .catch(err =>  { res.json(err)})
+//     console.log('bottom of getROUTE');
+
+// })
+
+
+//  ATTEMPT 4 to get it back working ================================
+
+router.put('/faunas/:X', (req,res) => {
+    userInput = req.body.X
+    let varToPass = req.body.X
+    console.log('varToPass:::$$$::::',varToPass)
+
+    // refine API query to exclude plants
+    
+    const fetchQuery = process.env.apiUrlFront+req.body.X+process.env.apiUrlBack
+
+    fetch(fetchQuery)
+        .then(res =>res.json())
+
+        .then( ( res ) => { 
+        
+            // adding Fetchdata into DB
+            return Fauna.create({ 
+            
+                commonName: res.data[0][0],
+                sciName: res.data[0][1].value,
+                speciesStatus: res.data[0][2],
+                speciesImage: res.data[0][12].url,
+                speciesFips: res.data[0][3],
+                speciesCounty: res.data[0][4],
+                speciesCountry: res.data[0][8],
+                areaStateShort: res.data[0][5],
+                areaStateFull: res.data[0][6],
+                speciesId: res.data[0][9]
+                
+                // }
+                // , function (err,small) {
+                //     if (err) return handleError(err)
+                //     return
+                // })
+
+            })
+        })
+        
+        .then(res.redirect(`/faunas/show/${varToPass}`))
+
+        .catch(err => console.log(err))
+
+// may need to pass in here since the last .then could duplicate
+console.log('LEAVING 385========================');
+// res.redirect('/faunas/show/:X')
+
 
 })
 
+
+
+router.get('/faunas/show/:X', (req,res) => {
+
+    let stateInput = req.params.X
+    console.log('stateInput#####################',stateInput);
+
+        // NOT RETURNING then not SHOWING
+    Fauna.find({areaStateFull: stateInput})
+    .then(response => {res.render('./faunas/show.liquid',{  response })})
+    .catch( (err) => {console.log(err);})
+
+})
 
 
 /////  ***** DON'T FORGET **************

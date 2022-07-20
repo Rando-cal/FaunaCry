@@ -15,49 +15,33 @@ SHOW.liquid
 
 </div class="card-group">
 
-{% comment %}
-USE FOR THEN
-
-{% for x in response %}
-
-{% assign var = 10 %}
-
-{% increment my_counter %}
-
-if i is = length of array then stop
-
-for i in 2
-
-{% endcomment %}
-
 {% comment %}                            
 testing 'seed' db.faunas.insertOne({commonName:"beta",sciName:"beta",areaStateFull:"New Jersey"})
+
+use style.displaynone if I want to pass  hidden vars via body
+{% for doc in zipFetch %}
 {% endcomment %}
 
-{% for doc in response %}
+
 
 <div class="card" style="width: 18rem;">
 
-
-    <form action="/favorites/:Y" method="POST">
-
-    <img src="{{doc.speciesImage}}" class="card-img-top" alt="...">
+    <img src="{{response[0].speciesImage}}" class="card-img-top" alt="...">
     <div class="card-body">
-        <h5 class="card-title">{{doc.commonName}}</h5>
-        <p name = 'sciName' value = "{{doc.sciName}}" class="card-text">{{doc.sciName}}</p>
-        <p name = 'speciesStatus' value = "{{doc.speciesStatus}}"class="card-text">{{doc.speciesStatus}}</p>
-        <p name = 'speciesState' value = "{{doc.speciesState}}"class="card-text">{{doc.speciesState}}</p>
-        <p name = 'areaStateFull' value = "{{doc.areaStateFull}}"class="card-text">{{doc.areaStateFull}}</p>
+        <h5 class="card-title">{{response[0].commonName}}</h5>
+        <p class="card-text">{{response[0].sciName}}</p>
+        <p class="card-text">{{response[0].speciesStatus}}</p>
+        <p class="card-text">{{response[0].areaStateFull}}</p>
 
-
-
+        <form action="/favorites/:Y" method="POST">
             <input name="Y" title="" type="submit" value="Favorite">
         </form>
 
     </div>
+
 </div>
 
 
-{% endfor %}
+
 
 {% endblock %}

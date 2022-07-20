@@ -4,7 +4,7 @@ const mongoose = require('../models/connections.js')
 const router = express.Router()
 
 // used FOR DEBUGGIN
-mongoose.set('debug',true)
+// mongoose.set('debug',true)
 
 const Fauna = require('../models/faunas.js')
 const Favorite = require('../models/favorites.js')
