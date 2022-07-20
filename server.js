@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false}))
 app.use(express.static('public'))
 
 const session = require('express-session')
-const MongoStore = require('connect-mongo').default
+const MongoStore = require('connect-mongo')
 
 app.use(
         session({
