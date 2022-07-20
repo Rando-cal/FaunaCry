@@ -13,6 +13,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const { response } = require('express');
 const express = require('express');
 const req = require('express/lib/request');
+const res = require('express/lib/response');
 const { append } = require('express/lib/response');
 
 const router = express.Router()
@@ -57,6 +58,10 @@ const downloadToFile = (content, filename, contentType) => {
 
 ///=============================  ROUTES ========================================================
 //================================================================================================
+
+router.get('/', (req,res) => {
+    res.redirect('/faunas')
+})
 
 router.get('/faunas', (req,res) => {
     res.render('./faunas/index.liquid')
