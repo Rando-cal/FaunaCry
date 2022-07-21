@@ -1,5 +1,6 @@
 const express = require('express')
 const req = require('express/lib/request')
+const Template = require('liquid/lib/liquid/template.js')
 const mongoose = require('../models/connections.js')
 const router = express.Router()
 
@@ -8,6 +9,7 @@ const router = express.Router()
 
 const Fauna = require('../models/faunas.js')
 const Favorite = require('../models/favorites.js')
+const ObjectId = require('mongodb').ObjectId
 
 
 // // ========= ROUTES =========
@@ -17,38 +19,57 @@ const Favorite = require('../models/favorites.js')
 // /favorites/:Y
 router.post('/:Y', async (req,res) => {
 
-    let varToPass ="test vartopass"
-    console.log('req',req);
+    let faunaId = req.params.Y
+    let userInfo = req.session.username
+
+    const filter = { _id : faunaId }
+    const update =  { owner : userInfo}
+
+    let docz = await Fauna.findOneAndUpdate(filter, update,{returnOriginal : false })
 
 
-    res.redirect(`/favorites/show/${varToPass}`)
+    res.redirect(`/favorites/show/${faunaId}`)
 })
+
 
 // /favorites/show/:x
 router.get('/show/:x', async (req,res) => {
+    let faunaId = req.params.x
+    let userInfo = req.session.username
+
+    const filter = { owner : userInfo }
+
+    let myFavorites = await Fauna.find(filter)
     
-    res.render('./favorites/show_favorites.liquid')
+    
+    res.render('./favorites/show_favorites.liquid',  {myFavorites})
 
 
 })
-// favorites/show/
 
-// OLD V
-// router.put('/faunas/:X', (req,res) => {
-//     userInput = req.body.X
-//     let varToPass = req.body.X
-//     console.log('varToPass:::$$$::::',varToPass)
 
-        
-    // Fauna.find()
-    //     .then(res =>res.json())
-        
-    //     .then(res.redirect(`/faunas/show/${varToPass}`))
+// /favorite/remove/:x
+router.delete('/remove/:Y', (req,res) => {
 
-    //     .catch(err => console.log(err))
+    let faunaId = req.params.Y
+    let userInfo = req.session.username
 
-//     res.redirect('/')  
-// })
+    const filter = { _id : faunaId }
+    const update =  { owner : userInfo}
+
+    // let docz = await Fauna.remove({filter})
+
+
+Fauna.deleteOne(filter, function (err) {
+    if (err) return handleError(err);
+});
+
+
+    res.redirect(`/favorites/show/${faunaId}`)
+})
+
+
+
 
 
 

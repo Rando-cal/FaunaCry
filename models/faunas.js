@@ -10,7 +10,10 @@ const faunaSchema = new Schema (
 
     {
 
-        commonName: String,
+        commonName: {
+            type: String,
+            unique: true
+        },
         sciName: String,
         speciesStatus: String,
         speciesImage: String,
@@ -21,10 +24,11 @@ const faunaSchema = new Schema (
         areaStateShort: String,
         areaStateFull: String,
         speciesId: Number,
-        owner: {
-            type: Schema.Types.ObjectId, // a singlue user _id
-            ref: 'User' // string of user is how we ref the model
-        }
+        // owner: {
+        //     type: Schema.Types.ObjectId, // a singlue user _id
+        //     ref: 'User' // string of user is how we ref the model
+        // }
+        owner: String
 
 
 

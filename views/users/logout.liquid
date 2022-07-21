@@ -2,24 +2,10 @@
 
 {% block content %}
 
-LOG OUT.liquid
-
 <div class="container-md">
-    <form action="/users/login" method="POST">
+    <form action="/users/logout" method="POST">
 
-        {% comment %}
-        <fieldset>
-            <legend>Please confim logout</legend>
-            <label class="form-label">Username:</label>
-            <input 
-                type="text" 
-                name="username" 
-                class="form-control"   >
-        
-        </fieldset>
-
-        {% endcomment %}
-        <input 
+          <input 
             type="submit"
             value="Log Out" 
             class="btn btn-success"

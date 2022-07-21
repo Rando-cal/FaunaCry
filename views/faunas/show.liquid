@@ -2,51 +2,30 @@
 
 {% block content %}
 
-SHOW.liquid
+<div class="mb-3 card-group main">   
 
-<div class="mb-3">
-
-    {% comment %}
-    <form action="/faunas/X" method="GET">
-        <input type="text" class="form-control" name="X" placeholder="enter a state">
-        <input type="submit" value="Submit">
-    </form>
-    {% endcomment %}
-
-</div class="card-group">
-
-{% comment %}                            
-testing 'seed' db.faunas.insertOne({commonName:"beta",sciName:"beta",areaStateFull:"New Jersey"})
-
-use style.displaynone if I want to pass  hidden vars via body
-
-
-
-{% endcomment %}
 
 {% for doc in response %}
 
-<script>console.log({{ doc | json }})</script>
 
-<div class="card" style="width: 18rem;">
+    <div class="card m30" style="width: 18rem;">
 
-    <img src="{{doc.speciesImage}}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{doc.commonName}}</h5>
-        <p class="card-text">{{doc.sciName}}</p>
-        <p class="card-text">{{doc.speciesStatus}}</p>
-        <p class="card-text">{{doc.areaStateFull}}</p>
-        ID: {{doc._id}}    :
+        <img src="{{doc.speciesImage}}" class="card-img-top " alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{doc.commonName}}</h5>
+            <p class="card-text">{{doc.sciName}}</p>
+            <p class="card-text">{{doc.speciesStatus}}</p>
+            <p class="card-text">{{doc.areaStateFull}}</p>
 
-        <form action="/favorites/:Y" method="POST">
-            <input name={{doc._id}} title="" type="submit" value="Favorite">
-        </form>
+            <form action="/favorites/{{doc._id}}" method="POST">
+                <input class="btn btn-sm  btn-success" name="{{doc._id}}" title="" type="submit" value="Favorite">
+            </form>
+
+        </div>
 
     </div>
 
 </div>
-
-
 
 {% endfor %}
 

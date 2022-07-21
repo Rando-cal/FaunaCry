@@ -72,16 +72,24 @@ router.post('/login', async (req,res) => {
 
 
 router.get('/logout', (req,res) => {
-    res.render('../views/users/logout.liquid')
-})
-
-router.post('/logout', (req,res) => {
     req.session.destroy(ret => {
         console.log('This is returned from req.session.destroy', ret)
         console.log(req.session)
-        res.redirect('/faunas')
+        res.redirect('/users/login')
     })
+
+
+    // res.render('../views/users/logout.liquid')
 })
+
+
+// router.post('/logout', (req,res) => {
+//     req.session.destroy(ret => {
+//         console.log('This is returned from req.session.destroy', ret)
+//         console.log(req.session)
+//         res.redirect('/users/login')
+//     })
+// })
 
 
 

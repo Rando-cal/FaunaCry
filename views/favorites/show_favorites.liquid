@@ -2,33 +2,38 @@
 
 {% block content %}
 
-SHOW FAVORITES.liquid
-
-<div class="mb-3">
-
-</div class="card-group">
-<div class="card" style="width: 18rem;">
+<div class=" m30 card-group mb-3" style="width: 18rem;">
 
 
-    <img src="{{response[0].speciesImage}}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{response[0].commonName}}</h5>
-        <p class="card-text">{{response[0].sciName}}</p>
-        <p class="card-text">{{response[0].speciesStatus}}</p>
-        <p class="card-text">{{response[0].speciesState}}</p>
-        <p class="card-text">{{response[0].areaStateFull}}</p>
 
-        <form action="/favorite/:Y?_method=PUT" method="POST">
-            {% comment %} not sure if this will a href works
-            as a form action option {% endcomment %}
-            <a href="#" class="btn btn-primary">Remove Favorite</a>
-        </form>
+
+    {% for doc in myFavorites %}
+
+    <div class="card">
+
+        <img src="{{doc.speciesImage}}" class="card-img-top " alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{doc.commonName}}</h5>
+            <p class="card-text">{{doc.sciName}}</p>
+            <p class="card-text">{{doc.speciesStatus}}</p>
+            <p class="card-text">{{doc.speciesState}}</p>
+            <p class="card-text">{{doc.areaStateFull}}</p>
+
+            <form action="/favorites/remove/{{doc._id}}?_method=DELETE" method="POST">
+                <input class="btn btn-sm btn-success" name="{{doc._id}}" title="" type="submit" value="Remove Favorite">
+            </form>
+        </div>
+
+        
+
     </div>
+
+    {% endfor %}
+
 </div>
 
 
 
-</div>
 
 
 {% endblock %}

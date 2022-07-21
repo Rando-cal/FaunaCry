@@ -2,16 +2,14 @@
 
 {% block content %}
 
-INDEX.liquid
-
-<div class="mb-3">
+<div class="mb-3 vh-100 container-fluid">
 
     <form action="/faunas/:X?_method=PUT" method="POST">
-        <input type="text" class="form-control" name="X" placeholder="enter a state">
-        <input type="submit" value="Submit">
+        <input  type="text" class="form-control mt20 basicAutoComplete" name="X" placeholder="enter a state to search for endangered species">
+        <input class="btn btn-success mt20" type="submit" value="Submit">
     </form>
 
 </div>
 
-
+<script src="bootstrap-autocomplete.min.js"></script>
 {% endblock %}
