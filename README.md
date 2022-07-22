@@ -1,6 +1,6 @@
 # FaunaCry
 
-FaunaCry is a small app to help raise awareness about endangered species in your area. Enter your location and see a list of all the species that are endangered near you.
+FaunaCry is a lean informational app to help raise awareness about the increasing thread of species extinction. The app can help search for endangered species in your area. Enter your state and see a list of all the species that are endangered near you.
 
 Use: Enter a location to get a list of species.
 
@@ -98,5 +98,9 @@ Route Table:
 
 
 ERD:
-
 ![](./Img/erd.PNG)
+
+
+
+Webiste Link: 
+https://sheltered-reaches-05567.herokuapp.com/
